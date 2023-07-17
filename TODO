@@ -1,1 +1,39 @@
-To test the Key
+Any project must be worked with a basic layout of a final view.
+This starts with description of the features. This features are then realized via endpoints.
+The endpoints will then utilize clean architecture to build the whole app.
+
+I have decided that I will stick to the monolith architecture for this build.
+I will consider using different tech stack for this. For example, Redis. Provided, I will find a good use for it.
+I would also keep in mind take care of 2 things:
+1. This forum should be encompassing all features described in 01's forum main and optional projects. 
+2. I should keep in mind extensibility. That means, then further should be extendable to **real-time forum**.
+
+Now, to think, the project can be extendable to a social network. But let's not get ahead of ourselves.
+Forum can be used as a basis for social network. But they are quite different in two major aspects.
+    (1) Clear separation of backend from frontend. Means backend is simply a list of API endpoints.
+    (2) Frontend uses a framework. So, it will vary drastically from things that are present here.
+The forum can be used as a backbone for the social network, especially the database part. In other words,
+you can use part of this forum and upcoming real-time forum for creating social network.
+
+I might actually complete this forum and fork it in github, so I will basically keep extending it in
+another repository.
+
+[Features]
+1. Authentification.
+    1. Register
+    2. Log-in
+2. Displaying posts.
+    1. All in a list with filtering.
+    2. Display of a whole post with comments.
+3. Dockerized.
+4. For authorised users:
+    1. Create post.
+    2. Comment post.
+    3. Like/Dislike posts and comments
+
+
+[Practices]
+1. Unit testing!
+
+[Think_through]
+1. Should I use another database, e.g PostgreSQL, instead of SQLite??
