@@ -1,33 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"html/template"
-	"net/http"
+	"forum/app"
+	"log"
 )
 
 func main() {
-	handler := http.NewServeMux()
-	handler.HandleFunc("/", landingPage)
-	server := http.Server{
-		Addr:    "localhost:8080",
-		Handler: handler,
-	}
-	server.ListenAndServe()
-}
+	// I might also want to run a logger at the beggining.
+	// Use Test-Driven development for this.
+	cfg := app.GetConfigs()
 
-func landingPage(rw http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		fmt.Println("not get method")
-		return
-	}
-	tpl, err := template.ParseGlob("./assets/templates/*.html")
-	if err != nil {
-		fmt.Println("parse glob: ", err)
-		return
-	}
-	err = tpl.ExecuteTemplate(rw, "index.html", nil)
-	if err != nil {
-		fmt.Println("exec", err)
+	app := app.Init(cfg)
+
+	if err := app.Run(); err != nil {
+		log.Fatal(err)
 	}
 }
