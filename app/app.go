@@ -1,23 +1,19 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"time"
 )
 
 type app struct {
 	data string
 }
-
-// then this will give the AppConfig struct to the app
-// the app then will do "init(AppConfig)" (or "setup(AppConfig)", or "new(AppConfig)"), meaning the setup will be done ac
-// then there will be app.Run() with error handling
-// the "run()" shall also do graceful shutdown
-// I should handle the error like:
-// if err = app.Run(); err!=nil {
-//
-// {
 
 func Init(cfg *config) *app {
 	return &app{
@@ -25,17 +21,31 @@ func Init(cfg *config) *app {
 	}
 }
 
-func (a *app) Run() error {
+func (a *app) Run(logger *log.Logger) error {
 	handler := http.NewServeMux()
 	handler.HandleFunc("/", landingPage)
-	server := http.Server{
+	server := &http.Server{
 		Addr:    "localhost:8080",
 		Handler: handler,
+		// TODO: add other fields if necessary
 	}
-	server.ListenAndServe()
+	go func() {
+		if err := server.ListenAndServe(); err != nil {
+			logger.Fatal(err)
+		}
+	}()
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, os.Interrupt)
+	signal.Notify(exit, os.Kill)
+	exitSig := <-exit
+	ctx, shutdown := context.WithTimeout(context.Background(), 10*time.Second)
+	logger.Println("Recieved terminate, graceful shutdown", exitSig)
+	server.Shutdown(ctx)
+	defer shutdown()
 	return nil
 }
 
+// TODO: add handlers
 func landingPage(rw http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		fmt.Println("not get method")

@@ -1,11 +1,10 @@
 package app
 
-// here is what I do:
-// First, I need to gather all necessary configs
-// This will include:
+// TODO:
+// First, gather all necessary configs.
 // * which tempates to use
-// * what database should be used
-// * else...
+// * what databases should be used
+// * ...
 
 type config struct {
 	data1 string

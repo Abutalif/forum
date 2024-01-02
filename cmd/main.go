@@ -3,16 +3,16 @@ package main
 import (
 	"forum/app"
 	"log"
+	"os"
 )
 
+// TODO: use tests
 func main() {
-	// I might also want to run a logger at the beggining.
-	// Use Test-Driven development for this.
 	cfg := app.GetConfigs()
-
+	logger := log.New(os.Stdout, "log", log.LstdFlags) // TODO: configure with cfg
 	app := app.Init(cfg)
 
-	if err := app.Run(); err != nil {
-		log.Fatal(err)
+	if err := app.Run(logger); err != nil {
+		logger.Fatal(err)
 	}
 }
