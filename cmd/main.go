@@ -13,6 +13,6 @@ func main() {
 	app := app.Init(cfg)
 
 	if err := app.Run(logger); err != nil {
-		logger.Fatal(err)
+		logger.Println("Shutting Down due to error:", err)
 	}
 }

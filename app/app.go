@@ -2,12 +2,12 @@ package app
 
 import (
 	"context"
-	"fmt"
-	"html/template"
+	"forum/app/delivery"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -23,41 +23,25 @@ func Init(cfg *config) *app {
 
 func (a *app) Run(logger *log.Logger) error {
 	handler := http.NewServeMux()
-	handler.HandleFunc("/", landingPage)
+	delivery.InitRoutes(handler)
 	server := &http.Server{
 		Addr:    "localhost:8080",
 		Handler: handler,
-		// TODO: add other fields if necessary
 	}
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
-			logger.Fatal(err)
+			logger.Println("Shutting down due to error:", err)
 		}
 	}()
-	exit := make(chan os.Signal, 1)
-	signal.Notify(exit, os.Interrupt)
-	signal.Notify(exit, os.Kill)
-	exitSig := <-exit
-	ctx, shutdown := context.WithTimeout(context.Background(), 10*time.Second)
-	logger.Println("Recieved terminate, graceful shutdown", exitSig)
-	server.Shutdown(ctx)
-	defer shutdown()
-	return nil
-}
 
-// TODO: add handlers
-func landingPage(rw http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		fmt.Println("not get method")
-		return
+	exit := make(chan os.Signal, 1)
+	signal.Notify(exit, syscall.SIGINT, syscall.SIGTERM)
+	exitSig := <-exit
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	logger.Println("Recieved terminate, graceful shutdown. Signal:", exitSig)
+	if err := server.Shutdown(ctx); err != nil {
+		logger.Fatalln("Could not gracefully shutdown:", err)
 	}
-	tpl, err := template.ParseGlob("./assets/templates/*.html")
-	if err != nil {
-		fmt.Println("parse glob: ", err)
-		return
-	}
-	err = tpl.ExecuteTemplate(rw, "index.html", nil)
-	if err != nil {
-		fmt.Println("exec", err)
-	}
+	return nil
 }

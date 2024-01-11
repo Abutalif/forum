@@ -6,3 +6,8 @@ abutalif@DESKTOP-8B6V3HQ:~/forum/cmd$ go run .
 parse glob:  html/template: pattern matches no files: `./assets/templates/*.html`
 
 This has to be fixed by telling some exact locations, independent of launch location.
+
+
+Let's not get ahead of ourselves.
+First I should do naive implementation.
+Then I can adress issues as repeating code in further refactoring
