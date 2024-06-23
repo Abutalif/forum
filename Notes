@@ -1,0 +1,15 @@
+**Logging**
+There are three logging libraries (from the most popular)
+zap:
+https://github.com/uber-go/zap
+
+logrus:
+https://github.com/sirupsen/logrus
+
+zerolog
+https://github.com/rs/zerolog.
+
+But for most cases stdlib logger should suffice.
+
+
+

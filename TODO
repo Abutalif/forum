@@ -1,13 +1,13 @@
-Alright, first things first, there is an issue. If I am launching this project from the root folder with something like "go run cmd/main", this sets the pivot point on root, so any code will be related to that location.
-
-But if I decide to launch it from "cmd" folder, the error will occur, is it now asks for different location and pattern macthing will fail. Example:
-abutalif@DESKTOP-8B6V3HQ:~/forum$ cd cmd/
-abutalif@DESKTOP-8B6V3HQ:~/forum/cmd$ go run .
-parse glob:  html/template: pattern matches no files: `./assets/templates/*.html`
-
-This has to be fixed by telling some exact locations, independent of launch location.
+[Tasks]
+1. Fill in ReadMe. 
+3. Implement path prefix and HTTP method specification.
+4. Cover everything with tests.
+5. Logger should use config options from cfg.
+6. Logger should decide which log must be printed.
 
 
-Let's not get ahead of ourselves.
-First I should do naive implementation.
-Then I can adress issues as repeating code in further refactoring
+
+[In_Progress]
+
+[Done]
+2. Explore logging options.

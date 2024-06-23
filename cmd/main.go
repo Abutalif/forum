@@ -6,10 +6,9 @@ import (
 	"os"
 )
 
-// TODO: use tests
 func main() {
 	cfg := app.GetConfigs()
-	logger := log.New(os.Stdout, "log", log.LstdFlags) // TODO: configure with cfg
+	logger := log.New(os.Stdout, "", log.LstdFlags)
 	app := app.Init(cfg)
 
 	if err := app.Run(logger); err != nil {
