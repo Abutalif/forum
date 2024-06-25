@@ -1,21 +1,13 @@
 package delivery
 
-import (
-	"fmt"
-	"forum/app/delivery/pages"
-	"net/http"
-)
+import "net/http"
 
-func InitRoutes(mux *http.ServeMux) error {
-	pages, err := pages.NewPages()
-	if err != nil {
-		return err
-	}
-	mux.Handle("/", pages)
-	mux.HandleFunc("/api", placeholder)
-	return nil
+// registers all usecase handlers
+func RegisterHandlers(router *http.ServeMux) {
+	router.Handle("/auth", nil)
 }
 
-func placeholder(rw http.ResponseWriter, r *http.Request) {
-	fmt.Println("This does nothing")
+// serves static pages
+func ServePages(router *http.ServeMux) {
+
 }

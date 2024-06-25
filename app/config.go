@@ -1,11 +1,12 @@
 package app
 
 type config struct {
-	data1 string
+	apiOnly bool // TODO: must be a better way to put that
 }
 
+// reads configs from ENV or file
 func GetConfigs() *config {
 	return &config{
-		data1: "test_data",
+		apiOnly: false,
 	}
 }

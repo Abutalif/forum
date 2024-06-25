@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"forum/app/delivery"
 	"log"
 	"net/http"
 	"os"
@@ -12,18 +11,17 @@ import (
 )
 
 type app struct {
-	data string
+	// data string
 }
 
 func Init(cfg *config) *app {
 	return &app{
-		data: cfg.data1,
+		// data: cfg.data1,
 	}
 }
 
 func (a *app) Run(logger *log.Logger) error {
 	handler := http.NewServeMux()
-	delivery.InitRoutes(handler)
 	server := &http.Server{
 		Addr:    "0.0.0.0:8080",
 		Handler: handler,
