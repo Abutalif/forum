@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"forum/app/entities"
-	"forum/app/usecases/auth"
+	"forum/app/internal/auth"
 )
 
 type authUsecase struct {

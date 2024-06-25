@@ -1,12 +1,16 @@
 package app
 
 type config struct {
-	apiOnly bool // TODO: must be a better way to put that
+	serveStatic bool
+	port        string
+	address     string
 }
 
-// reads configs from ENV or file
+// TODO: reads configs from ENV or file
 func GetConfigs() *config {
 	return &config{
-		apiOnly: false,
+		serveStatic: false,
+		port:        "8080",
+		address:     "localhost",
 	}
 }

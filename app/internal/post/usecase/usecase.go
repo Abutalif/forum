@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"forum/app/entities"
-	"forum/app/usecases/post"
+	"forum/app/internal/post"
 )
 
 type postUsecase struct {
@@ -15,7 +15,9 @@ func NewPostService(repo post.PostRepo) post.PostService {
 	}
 }
 
-func (p *postUsecase) CreatePost(post entities.Post) {}
+func (p *postUsecase) CreatePost(post entities.Post) {
+	p.repo.CreatePost(post)
+}
 
 func (p *postUsecase) EditPost() {}
 

@@ -11,5 +11,6 @@ type PostService interface {
 }
 
 type PostRepo interface {
-	GetPost()
+	GetPost() entities.Post
+	CreatePost(entities.Post) error
 }
