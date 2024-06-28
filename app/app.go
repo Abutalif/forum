@@ -18,6 +18,7 @@ type app struct {
 }
 
 func Init(cfg *config) *app {
+	// TODO: init must a bit more useful
 	return &app{
 		serveStatic: cfg.serveStatic,
 		address:     cfg.address + ":" + cfg.port,
@@ -29,7 +30,8 @@ func (a *app) Run(logger *log.Logger) error {
 
 	repos := internal.NewRepos()
 	usecases := internal.NewUsecases(repos)
-	delivery.RegisterHandlers(router, usecases)
+
+	delivery.RegisterApi(router, usecases)
 
 	if a.serveStatic {
 		delivery.ServePages(router)
