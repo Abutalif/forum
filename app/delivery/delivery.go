@@ -32,3 +32,6 @@ func ServePages(router *http.ServeMux) {
 // 	I don't want to deal with switch-case and pattern recognition.
 //  I also dislike the idea of using the HandlerFunc interface.
 //	I am not sure if I want to or know how to properly use the Handler interface .
+
+// BTW. If I am doing clean architecture, I can take inspiration from other's code,
+// but on the section where database is used.
