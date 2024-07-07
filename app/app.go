@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"forum/app/delivery"
+	"forum/app/delivery/api"
 	"forum/app/internal"
 	"log"
 	"net/http"
@@ -18,7 +19,7 @@ type app struct {
 }
 
 func Init(cfg *config) *app {
-	// TODO: init must a bit more useful
+	// TODO: init must be a bit more useful
 	return &app{
 		serveStatic: cfg.serveStatic,
 		address:     cfg.address + ":" + cfg.port,
@@ -26,12 +27,11 @@ func Init(cfg *config) *app {
 }
 
 func (a *app) Run(logger *log.Logger) error {
-	router := http.NewServeMux()
-
 	repos := internal.NewRepos()
 	usecases := internal.NewUsecases(repos)
 
-	delivery.RegisterApi(router, usecases)
+	router := http.NewServeMux()
+	router.Handle("/api/", http.StripPrefix("/api", api.NewApiHandler(usecases)))
 
 	if a.serveStatic {
 		delivery.ServePages(router)

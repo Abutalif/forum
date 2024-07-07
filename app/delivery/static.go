@@ -1,5 +1,10 @@
 package delivery
 
+import "net/http"
+
+func ServePages(router *http.ServeMux) {
+}
+
 // TODO: make everything needed for loading of static frontend
 
 // load all static html, css, json (frontend)

@@ -15,6 +15,7 @@ func NewAuthRepo() auth.AuthRepo {
 	return &authRepo{}
 }
 
+// TODO: rewrite this func
 func (a *authRepo) GetUser(name string) entities.User {
 	var user entities.User
 	query := fmt.Sprintf(`SELECT name, password FROM users WHERE name=%v;`, name)
@@ -24,6 +25,5 @@ func (a *authRepo) GetUser(name string) entities.User {
 	if err == sql.ErrNoRows {
 		return entities.User{}
 	}
-	// TODO: handle other errors
 	return user
 }

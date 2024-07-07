@@ -5,31 +5,25 @@ import (
 	"net/http"
 )
 
-type ApiHandler struct {
-	// here are what I have to handle
+func NewApiHandler(uc internal.Usecases) http.Handler {
+	apiRouter := http.NewServeMux()
 
-	// "POST /auth/signin"
-	// "POST /auth/signup"
+	// auth handles
+	apiRouter.HandleFunc("POST /signin", nil)
+	apiRouter.HandleFunc("POST /signup", nil)
 
-	// "GET /profile/{profile_id}"
+	// user data handles
+	apiRouter.HandleFunc("GET /profile/{profile_id}", nil)
 
-	// "POST /post"
-	// "GET /post/{post_id}"
-	// "POST /post/{post_id}/like"
-	// "POST /post/{post_id}/dislike"
-	// "GET /post/{post_id}/comments"
+	// post handles
+	apiRouter.HandleFunc("POST /post", nil)
+	apiRouter.HandleFunc("GET /post/{post_id}", nil)
+	apiRouter.HandleFunc("POST /post/{post_id}/rate", nil)
+	apiRouter.HandleFunc("GET /post/{post_id/comments}", nil)
 
-	// "POST /post/{post_id}/comment"
-	// "POST /post/{post_id}/comment/{comment_id}/like"
-	// "POST /post/{post_id}/comment/{comment_id}/dislike"
+	// comment handles
+	apiRouter.HandleFunc("POST /post/{post_id}/comment", nil)
+	apiRouter.HandleFunc("POST /post/{post_id}/comment/{comment_id}/rate", nil)
+
+	return apiRouter
 }
-
-func NewApiHandler(uc internal.Usecases) *ApiHandler {
-
-	return &ApiHandler{
-		// router.Handle("/auth", authHandler.NewHandler(uc.AuthService)),
-		// router.Handle("/path", postHandler.NewHandler(uc.PostService)),
-	}
-}
-
-func (a *ApiHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {}
