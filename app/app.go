@@ -16,22 +16,23 @@ import (
 type app struct {
 	serveStatic bool
 	address     string
+	handlers    *api.Handlers
 }
 
 func Init(cfg *config) *app {
-	// TODO: init must be a bit more useful
+	repos := internal.NewRepos()
+	usecases := internal.NewUsecases(repos)
+
 	return &app{
 		serveStatic: cfg.serveStatic,
 		address:     cfg.address + ":" + cfg.port,
+		handlers:    api.InitHandlers(usecases),
 	}
 }
 
 func (a *app) Run(logger *log.Logger) error {
-	repos := internal.NewRepos()
-	usecases := internal.NewUsecases(repos)
-
 	router := http.NewServeMux()
-	router.Handle("/api/", http.StripPrefix("/api", api.NewApiHandler(usecases)))
+	router.Handle("/api/", http.StripPrefix("/api", a.handlers.NewApiHandler()))
 
 	if a.serveStatic {
 		delivery.ServePages(router)

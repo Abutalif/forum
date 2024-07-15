@@ -13,6 +13,6 @@ func NewHandler(usecase auth.AuthService) *Handler {
 	return &Handler{usecase: usecase}
 }
 
-func (h *Handler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (h *Handler) SignIn(rw http.ResponseWriter, r *http.Request) {}
 
-}
+func (h *Handler) SignUp(rw http.ResponseWriter, r *http.Request) {}
